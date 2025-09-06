@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Happy Birthday Fátima</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: "Poppins", sans-serif;
+      background: #000;
+      color: #fff;
+      text-align: center;
+      overflow-x: hidden;
+    }
+
+    /* Canvas de confeti */
+    #confetti {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    /* Contenedor principal */
+    .container {
+      position: relative;
+      z-index: 2;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      box-sizing: border-box;
+    }
+
+    /* Texto central */
+    h1 {
+      font-size: 3rem;
+      margin-bottom: 20px;
+      animation: fadeIn 2s ease-in-out forwards;
+    }
+
+    p {
+      font-size: 1.2rem;
+      line-height: 1.8;
+      max-width: 800px;
+      margin: 0 auto 30px;
+      padding: 0 10px;
+      animation: fadeIn 3s ease-in-out forwards;
+    }
+
+    /* Imagen final */
+    .imagen-inferior {
+      width: 250px;
+      max-width: 90%;
+      border-radius: 15px;
+      box-shadow: 0 8px 20px rgba(255,255,255,0.2);
+      animation: fadeIn 4s ease-in-out forwards;
+    }
+
+    /* Animación */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Responsive */
+    @media (max-width: 600px) {
+      h1 { font-size: 2rem; }
+      p { font-size: 1rem; }
+      .imagen-inferior { width: 180px; }
+    }
+  </style>
+</head>
+<body>
+
+  <canvas id="confetti"></canvas>
+
+  <div class="container">
+    <h1>🎉 Happy Birthday 🎂</h1>
+    <p>
+      Te escribo con ilusión al ver que un año más está por terminar. El camino no siempre fue fácil: fue largo, con retos y caídas, pero lo lograste. Llegaste hasta aquí y eso es motivo de orgullo.
+
+Cada año que pasa se llena de nuevas historias, recuerdos y aprendizajes. El tiempo vuela, y con él tú también vas cambiando, creciendo y descubriendo nuevas partes de ti misma. Eso es increíble: nunca dejes de sorprenderte de lo mucho que puedes ser.
+
+La vida puede ser dura, y en ocasiones puede hacerte caer. Pero caer no es fracasar: lo que de verdad importa es levantarse una y otra vez. Y tú siempre lo has hecho.
+
+Deseo que este nuevo año te traiga aventuras, sonrisas y motivos para seguir brillando como siempre lo has hecho. Trabaja duro, guarda tus recuerdos, comparte tu luz con los demás y nunca dejes de reír.
+
+Estoy orgulloso de ti y de lo que eres. ✨
+Con cariño gael , cuídate mucho.
+    </p>
+    <img class="imagen-inferior" src="pastel.jpg" alt="Imagen final">
+  </div>
+
+  <script>
+    // 🎊 Confeti
+    const canvas = document.getElementById("confetti");
+    const ctx = canvas.getContext("2d");
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    const pieces = [];
+    const numberOfPieces = 150;
+
+    for (let i = 0; i < numberOfPieces; i++) {
+      pieces.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height - canvas.height,
+        w: 10,
+        h: 10,
+        color: `hsl(${Math.random() * 360}, 100%, 50%)`,
+        speed: Math.random() + 1,
+        rotation: Math.random() * 360
+      });
+    }
+
+    function draw() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      pieces.forEach(p => {
+        ctx.fillStyle = p.color;
+        ctx.save();
+        ctx.translate(p.x, p.y);
+        ctx.rotate((p.rotation * Math.PI) / 180);
+        ctx.fillRect(-p.w/2, -p.h/2, p.w, p.h);
+        ctx.restore();
+
+        p.y += p.speed;
+        p.rotation += 2;
+
+        if (p.y > canvas.height) {
+          p.y = -10;
+          p.x = Math.random() * canvas.width;
+        }
+      });
+      requestAnimationFrame(draw);
+    }
+    draw();
+
+    window.addEventListener("resize", () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    });
+  </script>
+
+</body>
+</html>
+
+
